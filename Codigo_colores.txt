@@ -1,0 +1,5 @@
+Colores de la marca:
+- PRINCIPAL: #00AEEF
+- SECUNDARIO: #D2AB67
+- OTRO:  #000000
+- OTRO: #FFFFFF
