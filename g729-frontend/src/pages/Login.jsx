@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal"; 
+import Modal from "react-modal";
 import { AuthContext } from "../context/AuthContext";
 
-Modal.setAppElement("#root"); 
+Modal.setAppElement("#root");
 
-function Login() { 
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -31,7 +31,7 @@ function Login() {
       return;
     }
 
-//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
     if (FAKE_MODE) {
       // Modo fake para pruebas sin backend
@@ -44,7 +44,7 @@ function Login() {
       }
       return;
     }
-///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     try {
       setLoading(true);
 
@@ -59,6 +59,12 @@ function Login() {
         setShow2FAModal(true); // Mostrar modal 2FA
       }
     } catch (err) {
+      // Guardar log de login fallido
+      addLog({
+        user: email,
+        action: "login_failed",
+        ip: "simulada-frontend", // luego backend podrá reemplazar con IP real
+      });
       setError("Credenciales incorrectas o error de conexión");
     } finally {
       setLoading(false);
@@ -73,8 +79,9 @@ function Login() {
       setError("Introduce un código válido de 6 dígitos");
       return;
     }
-/////////////////////////////////////////////////////////////////////////////
-    if (FAKE_MODE) { // Modo fake para pruebas sin backend
+    /////////////////////////////////////////////////////////////////////////////
+    if (FAKE_MODE) {
+      // Modo fake para pruebas sin backend
       // Código inventado: siempre pasa si es "123456"
       if (code === "123456") {
         login("fake-jwt-token", email === "admin@g729.com" ? "admin" : "user"); // Credenciales inventadas
@@ -90,7 +97,7 @@ function Login() {
       }
       return;
     }
-/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     try {
       setLoading(true);
 
@@ -105,6 +112,13 @@ function Login() {
       login(access_token, role);
       setShow2FAModal(false);
 
+      // Login exitoso
+      addLog({
+        user: email,
+        action: "login_success",
+        ip: "simulada-frontend", // luego backend podrá reemplazar con IP real
+      });
+
       if (role === "admin") {
         navigate("/dashboard");
       } else {
@@ -115,6 +129,13 @@ function Login() {
     } finally {
       setLoading(false);
     }
+
+    // Login fallido
+    addLog({
+      user: email,
+      action: "login_failed",
+      ip: "simulada-frontend",
+    });
   };
 
   return (
