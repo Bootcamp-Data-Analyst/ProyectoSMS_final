@@ -1,40 +1,95 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { addLog } from "../services/logService";
 
 function Upload() {
-  const [file, setFile] = useState(null);
+  const { user } = useContext(AuthContext);
 
-  // Función para manejar el cambio de archivo
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+
     if (!selectedFile) return;
 
-    // Validar el tipo de archivo
-    const allowedTypes = [
-      "text/csv",
-      "application/vnd.ms-excel", // .xls
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-    ];
-
-    if (!allowedTypes.includes(selectedFile.type)) {
-      alert("Solo se permiten archivos CSV o Excel (.xls, .xlsx)");
-      e.target.value = null; // Limpiar el input
+    // Validar extensión
+    const allowedExtensions = /(\.csv|\.xls|\.xlsx)$/i;
+    if (!allowedExtensions.exec(selectedFile.name)) {
+      setMessage("Solo se permiten archivos CSV, XLS o XLSX");
+      setFile(null);
       return;
     }
 
+    setMessage("");
     setFile(selectedFile);
   };
 
-  const handleUpload = () => {
-    console.log("Archivo a subir:", file);
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    setMessage("");
+
+    if (!file) {
+      setMessage("Selecciona un archivo primero");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Para pruebas frontend sin backend, puedes comentar axios y simular success:
+      /*
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("user", user?.email);
+
+      await axios.post("http://localhost:8000/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      */
+
+      // Simular éxito frontend
+      setTimeout(() => {
+        setMessage(`Archivo "${file.name}" subido correctamente`);
+        setFile(null);
+        setLoading(false);
+      }, 1000);
+
+      // Agregar log de subida
+      addLog({
+        user: user?.email,
+        action: "upload_file",
+        file: file.name,
+      });
+    } catch (err) {
+      setMessage("Error al subir el archivo");
+      setLoading(false);
+    }
   };
+
+  if (!user) {
+    return <p>Debes estar autenticado para subir archivos</p>;
+  }
 
   return (
     <div>
-      <h2>Subir archivo</h2>
+      <h2>Subida de Archivos</h2>
 
-      <input type="file" onChange={handleFileChange} />
+      <form onSubmit={handleUpload}>
+        <input type="file" onChange={handleFileChange} />
+        <br />
+        <button type="submit" disabled={loading || !file}>
+          {loading ? "Subiendo..." : "Subir"}
+        </button>
+      </form>
 
-      <button onClick={handleUpload}>Subir</button>
+      {message && (
+        <p style={{ color: message.includes("correcto") ? "green" : "red" }}>
+          {message}
+        </p>
+      )}
     </div>
   );
 }
