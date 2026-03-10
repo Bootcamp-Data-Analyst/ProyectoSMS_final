@@ -5,9 +5,8 @@ Proyecto empresa SMS
   <img src="ositos.jpg" alt="Equipo SMS DataVault" width="800">
 
   # SMS DataVault: Informe Técnico de Infraestructura y Despliegue
-  **Proyecto:** Gestión de Activos SMS | **Cliente:** SMS S.L.
+  **Proyecto:** Gestión de Activos SMS [cite: 2] | [cite_start]**Cliente:** SMS S.L. [cite: 5]
 </div>
-
 ---
 
 # Resumen del Proyecto: SMS DataVault
