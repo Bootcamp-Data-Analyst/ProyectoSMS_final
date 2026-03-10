@@ -1,5 +1,15 @@
 # ProyectoSMS_final
 Proyecto empresa SMS
+
+<div align="center">
+  <img src="ositos.jpg" alt="Equipo SMS DataVault" width="800">
+
+  # SMS DataVault: Informe Técnico de Infraestructura y Despliegue
+  **Proyecto:** Gestión de Activos SMS | **Cliente:** SMS S.L.
+</div>
+
+---
+
 # Resumen del Proyecto: SMS DataVault
 
 Este documento resume los requisitos y especificaciones para el desarrollo de la aplicación web **SMS DataVault**, solicitada por la empresa **SMS S.L.**.
