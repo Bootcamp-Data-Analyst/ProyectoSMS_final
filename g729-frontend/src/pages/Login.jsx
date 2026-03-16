@@ -113,11 +113,6 @@ function Login() {
       setShow2FAModal(false);
 
       // Login exitoso
-      addLog({
-        user: email,
-        action: "login_success",
-        ip: "simulada-frontend", // luego backend podrá reemplazar con IP real
-      });
 
       if (role === "admin") {
         navigate("/dashboard");
@@ -131,11 +126,7 @@ function Login() {
     }
 
     // Login fallido
-    addLog({
-      user: email,
-      action: "login_failed",
-      ip: "simulada-frontend",
-    });
+    
   };
 
   return (

@@ -56,13 +56,6 @@ function Upload() {
         setFile(null);
         setLoading(false);
       }, 1000);
-
-      // Agregar log de subida
-      addLog({
-        user: user?.email,
-        action: "upload_file",
-        file: file.name,
-      });
     } catch (err) {
       setMessage("Error al subir el archivo");
       setLoading(false);
