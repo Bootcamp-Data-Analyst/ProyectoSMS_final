@@ -6,7 +6,7 @@ export function AuthProvider({ children }) { // Proveedor de contexto para auten
 
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { // Al cargar la aplicación, se verifica si hay un token y rol almacenados en localStorage para mantener la sesión iniciada
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 

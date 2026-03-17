@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLogs } from "../services/logService";
+import { getLogs } from "../../services/logService";
 
 function Logs() {
 
@@ -13,9 +13,14 @@ function Logs() {
   const logsPerPage = 10;
 
   useEffect(() => {
-    const allLogs = getLogs().reverse(); // Mostrar primero los más recientes
-    setLogs(allLogs);
-    setFilteredLogs(allLogs);
+    const loadLogs = async () => {
+      const allLogs = await getLogs();
+      const byDate = Array.isArray(allLogs) ? allLogs.reverse() : [];
+      setLogs(byDate);
+      setFilteredLogs(byDate);
+    };
+
+    loadLogs();
   }, []);
 
   // Filtrar logs

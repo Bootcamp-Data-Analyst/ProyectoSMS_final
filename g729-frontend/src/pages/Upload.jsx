@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { addLog } from "../services/logService";
 
 function Upload() {
   const { user } = useContext(AuthContext);
@@ -51,11 +50,11 @@ function Upload() {
       */
 
       // Simular éxito frontend
-      setTimeout(() => {
+      setTimeout(() => { 
         setMessage(`Archivo "${file.name}" subido correctamente`);
         setFile(null);
         setLoading(false);
-      }, 1000);
+      }, 0);
     } catch (err) {
       setMessage("Error al subir el archivo");
       setLoading(false);

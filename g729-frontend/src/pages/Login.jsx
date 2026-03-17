@@ -35,7 +35,7 @@ function Login() {
 
     if (FAKE_MODE) {
       // Modo fake para pruebas sin backend
-      if (email === "admin@g729.com" && password === "123456") {
+      if (email && password === "123456") {
         // Credenciales de prueba para admin
         setTempToken("fake-token-123"); // token temporal inventado
         setShow2FAModal(true);
@@ -124,9 +124,6 @@ function Login() {
     } finally {
       setLoading(false);
     }
-
-    // Login fallido
-    
   };
 
   return (

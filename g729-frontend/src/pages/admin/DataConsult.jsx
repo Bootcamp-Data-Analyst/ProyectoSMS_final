@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function DataConsult() {
-  const [records, setRecords] = useState([]);
+function DataConsult() { 
+  const [records, setRecords] = useState([]); // Estado para almacenar los registros obtenidos del backend
 
   const [filters, setFilters] = useState({
     country: "",
@@ -14,16 +14,16 @@ function DataConsult() {
 
   const [totalPages, setTotalPages] = useState(1);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); 
 
-  const fetchRecords = async () => {
+  const fetchRecords = async () => { // Función para obtener los registros desde el backend
     try {
       setLoading(true);
 
       const token = localStorage.getItem("token");
 
       const response = await axios.get("/records", {
-        params: {
+        params: { // Enviar los filtros y la página como parámetros
           ...filters,
           page,
           page_size: 25,
@@ -42,14 +42,14 @@ function DataConsult() {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { // Cada vez que cambian los filtros o la página, se vuelven a cargar los registros
     fetchRecords();
   }, [filters, page]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
 
-    setFilters((prev) => ({
+    setFilters((prev) => ({ 
       ...prev,
       [name]: value,
     }));
