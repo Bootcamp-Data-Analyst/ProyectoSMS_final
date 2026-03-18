@@ -44,7 +44,7 @@ function Upload() {
       formData.append("file", file);
       formData.append("user", user?.email);
 
-      await axios.post("http://localhost:8000/upload", formData, {
+      await axios.post("http://localhost:8000/upload", formData, { // Cambia esta URL por la de tu backend
         headers: { "Content-Type": "multipart/form-data" },
       });
       */

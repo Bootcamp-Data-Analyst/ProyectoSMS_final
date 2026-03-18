@@ -33,7 +33,7 @@ function App() {
         {/* Ruta pública */}
         <Route path="/login" element={<Login />} />
 
-        {/* Upload puede verlo admin o user; admin lo ve con AdminLayout, user sin él */}
+        {/* Ruta usuario logeado */}
         <Route
           path="/upload"
           element={
@@ -53,7 +53,6 @@ function App() {
         >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/data" element={<DataConsult />} />
-          <Route path="/dataconsult" element={<DataConsult />} />
           <Route path="/logs" element={<Logs />} />
           <Route path="/admin" element={<Admin />} />
         </Route>
