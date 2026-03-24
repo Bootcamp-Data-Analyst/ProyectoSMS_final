@@ -9,8 +9,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import DataConsult from "./pages/admin/DataConsult";
 import Logs from "./pages/admin/Logs";
-import Admin from "./pages/admin/Admin";
 import Upload from "./pages/Upload";
+import UserManagement from "./pages/admin/UserManagement";
 
 function UploadRoute() {
   const { user } = useContext(AuthContext);
@@ -54,7 +54,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/data" element={<DataConsult />} />
           <Route path="/logs" element={<Logs />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/users" element={<UserManagement />} />
         </Route>
 
         <Route path="/" element={<Login />} />

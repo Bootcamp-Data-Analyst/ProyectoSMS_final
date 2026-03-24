@@ -1,61 +1,56 @@
-import { Link, Outlet, useLocation } from "react-router-dom"
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import logo from "../assets/LogoHorMixto.png";
+import "../styles/App.css";
 
 function AdminLayout({ children }) {
-
-  const location = useLocation()
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
 
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
     { name: "Logs", path: "/logs" },
     { name: "Users", path: "/users" },
     { name: "Datasets", path: "/data" },
-    { name: "IP Allowlist", path: "/ip" },
-    { name: "Upload", path: "/upload" }
-  ]
+    { name: "Upload", path: "/upload" },
+  ];
+
+  // Obtener nombre de usuario (o usar 'Admin' por defecto)
+  const username = user?.email ? user.email.split('@')[0] : "Admin";
 
   return (
-
-    <div style={{ display: "flex", height: "100vh" }}>
-
+    <div className="admin-layout">
       {/* Sidebar */}
-      <div style={{
-        width: "220px",
-        background: "#1e293b",
-        color: "white",
-        padding: "20px"
-      }}>
+      <div className="admin-sidebar">
+        <img src={logo} alt="Logo Corporativo" className="logo-mini" />
+        
+        <div className="sidebar-welcome">
+          Bienvenido,<br />
+          <span style={{ color: "white", fontSize: "1.5rem", fontWeight: "bold" }}>
+            {username}
+          </span>
+        </div>
 
-        <h2>Admin Panel</h2>
-
-        {menuItems.map(item => (
-
-          <div key={item.path} style={{ margin: "10px 0" }}>
-
-            <Link
-              to={item.path}
-              style={{
-                color: location.pathname === item.path ? "#38bdf8" : "white",
-                textDecoration: "none"
-              }}
-            >
-              {item.name}
-            </Link>
-
-          </div>
-
+        {menuItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`sidebar-link ${
+              location.pathname === item.path ? "sidebar-link-active" : ""
+            }`}
+          >
+            {item.name}
+          </Link>
         ))}
-
       </div>
 
-      {/* Content */}
+      {/* Content Area */}
       <div style={{ flex: 1, padding: "20px", overflow: "auto" }}>
         {children || <Outlet />}
       </div>
-
     </div>
-
-  )
-
+  );
 }
 
-export default AdminLayout
+export default AdminLayout;

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { AuthContext } from "../context/AuthContext";
+import "../styles/App.css";
+import logo from "../assets/LogoBlanco.png";
 
 Modal.setAppElement("#root");
 
@@ -127,30 +129,35 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login G729</h2>
+    <div className="page-container">
+      {/* Coloca tu logo en la carpeta public con el nombre 'logo.png' o ajusta esta ruta */}
+      <img src={logo} alt="Logo Corporativo" className="logo" />
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <button type="submit" disabled={loading}>
-          {loading ? "Verificando..." : "Login"}
-        </button>
-      </form>
+      <div className="container-bg-match">
+        <h2 className="text-gold text-center">Login G729</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        <form onSubmit={handleLogin} style={{ width: "100%" }}>
+          <input
+            type="email"
+            placeholder="Email"
+            className="form-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="form-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Verificando..." : "Login"}
+          </button>
+        </form>
+
+        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+      </div>
 
       {/* Modal 2FA */}
       <Modal
